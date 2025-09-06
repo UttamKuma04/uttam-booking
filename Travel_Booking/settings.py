@@ -32,6 +32,11 @@ import os
 
 ALLOWED_HOSTS = ["*"]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://uttam-booking-4.onrender.com"
+]
+
+
 
 # Application definition
 
