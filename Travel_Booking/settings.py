@@ -25,8 +25,9 @@ SECRET_KEY = 'django-insecure-v@asx=h($=1*0g@z-r2j!e(rc2eope=$61hs@5@c#qh&$l$qou
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
 
+ALLOWED_HOSTS = ["uttam-booking.onrender.com"]
 
 # Application definition
 
