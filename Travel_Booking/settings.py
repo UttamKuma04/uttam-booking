@@ -30,13 +30,7 @@ DEBUG = True
 
 import os
 
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
-
-class RenderAllowedHosts:
-    def __contains__(self, host):
-        return host.endswith(".onrender.com")
-
-ALLOWED_HOSTS.append(RenderAllowedHosts())
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
