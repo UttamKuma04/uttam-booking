@@ -1,0 +1,270 @@
+{% extends 'base.html' %}
+
+{% block title %}My Booking History - Travel Lykke{% endblock %}
+
+{% block extra_css %}
+<style>
+    .page-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .page-header h1 {
+        font-size: 2.2rem;
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 10px;
+    }
+
+    .page-header p {
+        color: #6c757d;
+        font-size: 1rem;
+    }
+
+    /* Simple Messages */
+    .message {
+        padding: 12px 20px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        font-weight: 500;
+    }
+
+    .message.success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+    }
+
+    .message.error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+    }
+
+    .message.warning {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeaa7;
+    }
+
+    .table-container {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+
+    .simple-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+    }
+
+    .simple-table thead {
+        background: var(--dark-color);
+    }
+
+    .simple-table thead th {
+        padding: 15px 12px;
+        color: white;
+        font-weight: 600;
+        text-align: center;
+        font-size: 0.9rem;
+    }
+
+    .simple-table tbody td {
+        padding: 15px 12px;
+        text-align: center;
+        border-bottom: 1px solid #f1f1f1;
+    }
+
+    .simple-table tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .status-confirmed {
+        background-color: #28a745;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .status-cancelled {
+        background-color: #dc3545;
+        color: white;
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .status-pending {
+        background-color: #ffc107;
+        color: #212529;
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .cancel-btn {
+        background-color: #dc3545;
+        color: white;
+        padding: 6px 16px;
+        border-radius: 20px;
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .cancel-btn:hover {
+        background-color: #c82333;
+        color: white;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .empty-state i {
+        font-size: 3rem;
+        color: var(--primary-color);
+        margin-bottom: 20px;
+    }
+
+    .empty-state h3 {
+        color: var(--dark-color);
+        margin-bottom: 15px;
+    }
+
+    .empty-state p {
+        color: #6c757d;
+        margin-bottom: 25px;
+    }
+
+    @media (max-width: 768px) {
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .simple-table {
+            min-width: 700px;
+        }
+
+        .simple-table thead th,
+        .simple-table tbody td {
+            padding: 10px 8px;
+            font-size: 0.8rem;
+        }
+
+        .page-header h1 {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1><i class="fas fa-history me-2"></i>My Bookings</h1>
+    <p>View and manage your travel bookings</p>
+</div>
+
+<!-- Messages -->
+{% if messages %}
+    {% for message in messages %}
+        <div class="message {{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if bookings %}
+<div class="table-container">
+    <table class="simple-table">
+        <thead>
+            <tr>
+                <th>Booking ID</th>
+                <th>Travel Type</th>
+                <th>Route</th>
+                <th>Date & Time</th>
+                <th>Seats</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td style="font-family: monospace; font-weight: 600;">
+                    {{ booking.booking_id }}
+                </td>
+                <td>
+                    {% if booking.travel_option.travel_type == 'flight' %}
+                        ✈ Flight
+                    {% elif booking.travel_option.travel_type == 'train' %}
+                        🚂 Train
+                    {% elif booking.travel_option.travel_type == 'bus' %}
+                        🚌 Bus
+                    {% else %}
+                        {{ booking.travel_option.get_travel_type_display }}
+                    {% endif %}
+                </td>
+                <td style="font-weight: 500;">
+                    {{ booking.travel_option.source }} → {{ booking.travel_option.destination }}
+                </td>
+                <td>
+                    {{ booking.travel_option.travel_datetime|date:"d M Y" }}<br>
+                    <small style="color: #6c757d;">{{ booking.travel_option.travel_datetime|date:"H:i" }}</small>
+                </td>
+                <td style="font-weight: 600;">
+                    {{ booking.number_of_seats }}
+                </td>
+                <td style="font-weight: 600; color: var(--secondary-color);">
+                    ₹{{ booking.total_price }}
+                </td>
+                <td>
+                    <span class="status-{{ booking.status|lower }}">
+                        {{ booking.status|capfirst }}
+                    </span>
+                </td>
+                <td>
+                    {% if booking.status == "confirmed" %}
+                        <a href="{% url 'cancel_booking' booking.booking_id %}" 
+                           class="cancel-btn"
+                           onclick="return confirm('Cancel this booking?')">
+                            Cancel
+                        </a>
+                    {% else %}
+                        <span style="color: #6c757d;">-</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="text-center mt-3">
+    <p class="text-muted">Total: {{ bookings|length }} booking{{ bookings|length|pluralize }}</p>
+</div>
+
+{% else %}
+<div class="empty-state">
+    <i class="fas fa-ticket-alt"></i>
+    <h3>No Bookings Yet</h3>
+    <p>You haven't made any bookings. Start exploring!</p>
+    <a href="{% url 'travel_options_list' %}" class="btn btn-primary">
+        <i class="fas fa-search me-1"></i>Find Travels
+    </a>
+</div>
+{% endif %}
+{% endblock %}

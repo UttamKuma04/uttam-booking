@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Travel Lykke - Your Journey Begins Here{% endblock %}</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    
+<style>
+    :root {
+        --primary-color: #ff5a5f;
+        --primary-hover: #e14d50;
+        --secondary-color: #00d4aa;
+        --dark-color: #2c3e50;
+        --light-bg: #f8fafe;
+        --white: #ffffff;
+        --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        --shadow-hover: 0 8px 25px rgba(0,0,0,0.15);
+        --border-radius: 15px;
+        --transition: all 0.3s ease;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    html, body {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    body { 
+        padding-top: 80px;
+        background: linear-gradient(135deg, var(--light-bg) 0%, #e3f2fd 100%);
+        font-family: 'Poppins', sans-serif;
+        min-height: 100vh;
+        color: #333;
+    }
+
+    main {
+        flex: 1;  
+    }
+
+    .navbar {
+        background: linear-gradient(135deg, var(--dark-color) 0%, #34495e 100%) !important;
+        padding: 15px 0;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
+    }
+
+    .navbar-brand { 
+        font-weight: 700;
+        font-size: 1.8rem;
+        letter-spacing: 1px;
+        color: var(--white) !important;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .navbar-brand i {
+        color: var(--primary-color);
+        font-size: 2rem;
+    }
+
+    .navbar-nav .nav-link {
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.9) !important;
+        padding: 8px 16px !important;
+        border-radius: 8px;
+        margin: 0 4px;
+        transition: var(--transition);
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: var(--white) !important;
+        background: rgba(255, 90, 95, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .navbar-nav .nav-link.text-danger:hover {
+        background: rgba(220, 53, 69, 0.2);
+    }
+
+    .navbar-toggler {
+        border: none;
+        padding: 4px 8px;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+
+    .container {
+        max-width: 1200px;
+        background: var(--white);
+        padding: 30px;
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow);
+        margin-bottom: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+
+    .btn {
+        border-radius: 25px;
+        font-weight: 500;
+        padding: 10px 25px;
+        transition: var(--transition);
+        border: none;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary-color), #ff7b7e);
+        box-shadow: 0 4px 15px rgba(255, 90, 95, 0.3);
+    }
+
+    .btn-primary:hover {
+        background: linear-gradient(135deg, var(--primary-hover), #e14d50);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 90, 95, 0.4);
+    }
+
+    .btn-success {
+        background: linear-gradient(135deg, var(--secondary-color), #00e6b8);
+        box-shadow: 0 4px 15px rgba(0, 212, 170, 0.3);
+    }
+
+    .btn-success:hover {
+        background: linear-gradient(135deg, #00bf95, var(--secondary-color));
+        transform: translateY(-2px);
+    }
+
+    .form-control, .form-select {
+        border: 2px solid #e9ecef;
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-weight: 500;
+        transition: var(--transition);
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(255, 90, 95, 0.1);
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: var(--dark-color);
+        margin-bottom: 8px;
+    }
+
+    .modal-content {
+        border-radius: var(--border-radius);
+        border: none;
+        box-shadow: var(--shadow-hover);
+    }
+
+    .modal-header {
+        background: linear-gradient(135deg, var(--dark-color), #34495e);
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+        padding: 20px 30px;
+    }
+
+    .modal-body {
+        padding: 30px;
+    }
+
+    .list-group-item {
+        border: none;
+        border-radius: 12px !important;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        transition: var(--transition);
+    }
+
+    .list-group-item:hover {
+        transform: translateX(5px);
+        box-shadow: var(--shadow);
+    }
+
+    /* Alert Enhancements */
+    .alert {
+        border: none;
+        border-radius: 12px;
+        font-weight: 500;
+        padding: 15px 20px;
+    }
+
+    /* Footer Enhancement */
+    footer {
+        margin-top: 60px;
+        padding: 30px 0;
+        text-align: center;
+        color: #6c757d;
+        background: var(--white);
+        border-top: 3px solid var(--primary-color);
+        box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
+    }
+
+    footer p {
+        margin: 0;
+        font-weight: 500;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .container {
+            margin: 10px;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        
+        .navbar-brand {
+            font-size: 1.5rem;
+        }
+        
+        body {
+            padding-top: 70px;
+        }
+    }
+
+    /* Animation Classes */
+    .fade-in {
+        animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide-in {
+        animation: slideIn 0.6s ease-out;
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateX(-30px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+</style>
+
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Enhanced Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <i class="fas fa-plane"></i>
+                Travel Lykke
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'profile' %}">
+                                <i class="fas fa-user me-1"></i>Profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'travel_options_list' %}">
+                                <i class="fas fa-route me-1"></i>Journey
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'bookings' %}">
+                                <i class="fas fa-ticket-alt me-1"></i>My Bookings
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-danger" href="{% url 'logout' %}">
+                                <i class="fas fa-sign-out-alt me-1"></i>Logout
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">
+                                <i class="fas fa-sign-in-alt me-1"></i>Login
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'signup' %}">
+                                <i class="fas fa-user-plus me-1"></i>Register
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="fade-in">
+        {% if not hide_container %}
+        <div class="container mt-4">
+        {% endif %}
+            {% block content %}{% endblock %}
+        {% if not hide_container %}
+        </div>
+        {% endif %}
+    </main>
+
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">
+                        <i class="fas fa-user-circle me-2"></i>My Profile
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" class="mb-4">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">
+                                    <i class="fas fa-user me-1"></i>Username
+                                </label>
+                                <input type="text" name="username" value="{{ user.username }}" class="form-control">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">
+                                    <i class="fas fa-envelope me-1"></i>Email
+                                </label>
+                                <input type="email" name="email" value="{{ user.email }}" class="form-control">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-1"></i>Update Profile
+                        </button>
+                    </form>
+
+                    <!-- Messages -->
+                    {% if messages %}
+                        <div class="mb-4">
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} slide-in">
+                                    <i class="fas fa-info-circle me-2"></i>{{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <!-- Booking History -->
+                    <h5 class="mb-3">
+                        <i class="fas fa-history me-2"></i>My Bookings
+                    </h5>
+                    {% if bookings %}
+                        <div class="list-group">
+                            {% for booking in bookings %}
+                            <div class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <span class="badge bg-primary me-2">{{ booking.booking_id }}</span>
+                                            <strong>{{ booking.travel_option.get_travel_type_display }}</strong>
+                                        </div>
+                                        <div class="mb-1">
+                                            <i class="fas fa-route text-muted me-1"></i>
+                                            {{ booking.travel_option.source }} → {{ booking.travel_option.destination }}
+                                        </div>
+                                        <div class="mb-1">
+                                            <i class="fas fa-calendar text-muted me-1"></i>
+                                            {{ booking.travel_option.travel_datetime|date:"M d, Y - H:i" }}
+                                        </div>
+                                        <div class="mb-1">
+                                            <i class="fas fa-users text-muted me-1"></i>
+                                            {{ booking.number_of_seats }} seat{{ booking.number_of_seats|pluralize }} | 
+                                            <i class="fas fa-rupee-sign text-muted me-1"></i>{{ booking.total_price }}
+                                        </div>
+                                        <span class="badge bg-{% if booking.status == 'confirmed' %}success{% elif booking.status == 'cancelled' %}danger{% else %}warning{% endif %}">
+                                            {{ booking.status|title }}
+                                        </span>
+                                    </div>
+                                    <div class="ms-3">
+                                        {% if booking.status == "confirmed" %}
+                                            <a href="{% url 'cancel_booking' booking.booking_id %}" class="btn btn-outline-danger btn-sm">
+                                                <i class="fas fa-times me-1"></i>Cancel
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-ticket-alt fa-3x text-muted mb-3"></i>
+                            <p class="text-muted">You have no bookings yet.</p>
+                            <a href="{% url 'travel_options_list' %}" class="btn btn-primary">
+                                <i class="fas fa-search me-1"></i>Find Travels
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="slide-in">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <p class="mb-2">
+                        <i class="fas fa-plane text-primary me-2"></i>
+                        © 2025 Travel Lykke · All Rights Reserved
+                    </p>
+                    <p class="small text-muted">Your journey begins here</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card, .alert, .list-group-item').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
